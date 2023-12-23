@@ -32,3 +32,18 @@ eureka:
     lease-renewal-interval-in-seconds: 30
     #tiempo limite para que se considere fallido
     lease-expiration-duration-in-seconds: 65
+
+    #ruta de los servicios a los que se dirigira el gateway
+    routes:
+      #rutas para cliente-mesa-service
+      - id: cliente-mesa-service
+        uri: lb://cliente-mesa-service
+        predicates:
+          #para habilitar el balanceo de carga, basta con poner el lb en el path
+          - Path=/api/clientes/**,/api/mesas/**
+
+        #rutas para reservas-service
+      - id: reservas-service
+        uri: lb://reservas-service
+        predicates:
+          - Path=/api/reservas/**
