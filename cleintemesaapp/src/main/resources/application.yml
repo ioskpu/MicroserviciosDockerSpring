@@ -1,0 +1,45 @@
+server:
+  port: 8082
+
+  spring:
+    application:
+      name: cliente-mesa-service
+    datasource:
+      #url de conexion a base de datos h2
+      url: jdbc:h2:mem:testdb-clientes-mesas
+      #driver para la base de datos h2
+      driver-class-name: org.h2.Driver
+      #usuario para la base de datos h2
+      username: sa
+      #contraseña para la base de datos h2
+      password:
+
+    jpa:
+      #dialecto para hibenate
+      database-platform: org.hibernate.dialect.H2Dialect
+    h2:
+      console:
+        #habilitar la consola h2
+        enabled: true
+        #ruta de acceso a la consola h2
+        path: /h2-console
+
+eureka:
+  client:
+    serviceURL:
+      #url de eureka
+      defaultZone: http://eureka:8761/eureka
+    registerWithEureka: true
+    #indica que el servicio se debe registrar en eureka
+    fetchRegistry: true
+    #indica que servicio obtenga la lista de servicios registrados en eureka
+    healtcheck:
+      #habilita chequeos de salva (heartbeats)
+      enabled: true
+  instance:
+    #id unico de instancia para registrarse en eureka
+    instance-id: ${spring.application.name}:${random.value}
+    #frecuencia de heartbeats
+    lease-renewal-interval-in-seconds: 28
+    #tiempo limite para el heartbeats
+    lease-expiration-duration-in-seconds: 65
